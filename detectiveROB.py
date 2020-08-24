@@ -7,12 +7,13 @@ from string import Template
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-getContact = '/root/scripts/mycontacts.txt'     # This path need to update as per directory
-TemplateMessage = '/root/scripts/message.txt'   # This path need to update as per directory
+getContact = '/opt/customlogger/mycontacts.txt'     # This path need to update as per directory
+TemplateMessage = '/opt/customlogger/message.txt'   # This path need to update as per directory
 
-MY_ADDRESS = 'databackup901@gmail.com'          # This line need to update as per requirement
-PASSWORD = 'XXXXXXX'                            # This line need to update as per requirement
-SmtpHost = 'smtp.gmail.com'                     # This line need to update as per requirement
+MY_ADDRESS = 'info@airfinder.com'               # This line need to update as per requirement
+SESUser = 'XXXXXXXX'
+PASSWORD = 'XXXXXXXX'                            # This line need to update as per requirement
+SmtpHost = 'email-smtp.us-east-1.amazonaws.com'                     # This line need to update as per requirement
 SmptpPort = '587'                               # This line need to update as per requirement
 
 def get_contacts(getContact):
@@ -35,7 +36,7 @@ def mailerFunction():
  # set up the SMTP server
     s = smtplib.SMTP(host= SmtpHost, port=SmptpPort)
     s.starttls()
-    s.login(MY_ADDRESS, PASSWORD)
+    s.login(SESUser, PASSWORD)
     for name, email in zip(names, emails):
         msg = MIMEMultipart()       # create a message
 
@@ -63,13 +64,13 @@ def mailerFunction():
 # This function is used to restart nginx service
 def restartNginx():
     print("Restarting Nginx....")
-    subprocess.call(['systemctl', 'stop', 'nginx'])
-    subprocess.call(['systemctl', 'start', 'nginx'])
+    subprocess.call(['supervisorctl', 'start', 'cloud-canary'])
+    subprocess.call(['supervisorctl', 'start', 'cloud-canary'])
 
 ## Define your pattern here for log catch
-pattern = '404'                       # Log Pattern to match from logs   
+pattern = 'Too many open files'                       # Log Pattern to match from logs   
 restartValue = '0'                    # Global value to check service need to restart or not  
-LogFile = "/var/log/nginx/access.log" # Log file full path
+LogFile = "/var/log/supervisor/cloud-canary-stdout---supervisor-xroSdT.log" # Log file full path
 NormalMessage = "No error found"
 # This function is tailing log file and checking agains pattern 
 def tailer ():

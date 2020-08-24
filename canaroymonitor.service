@@ -1,0 +1,9 @@
+[Unit]
+Description=Canary Process Monitor
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /opt/customlogger/detectiveROB.sh
+
+[Install]
+WantedBy=multi-user.target

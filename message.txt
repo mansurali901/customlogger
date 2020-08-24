@@ -1,6 +1,12 @@
 Dear ${PERSON_NAME}, 
 
-This is a test message. 
-Have a great weekend! 
+This is to Notify that Canary Process has been restarted.
 
-Yours Truly
+	Environment :	Production Us-east-1 
+	Status Code :	503
+	Error	    :	"Too Many Files Open"
+	Action 	    :	Canary Process has been restarted
+
+Have a great weekend! 
+DevOps Team 
+Link Labs
